@@ -1,0 +1,58 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("button").click(function(){
+  var event = {};
+  event['end'] = $("#end").val();
+  event['force_code'] = $("#forceCode").val();
+  event['force_reference'] = $("#forceReference").val();
+  event['type'] = $("#type").val();
+  event['offence'] = $("#offence").val();
+  event['power_of_arrest'] = $("#powerOfArrest").val();
+  event['report_date'] = $("#reportDate").val();
+  
+  var eventUrl = "/v2/people/"+$("#personUid").val()+"/events?access_token=293da4c2-18f9-4deb-a959-77c787e9f20a";
+  
+  $.ajax({
+        url: eventUrl,
+    	type: 'POST',
+  		data: JSON.stringify(event),
+ 		contentType: "application/json",
+	    success: function(data, textStatus, jqXHR)
+	    {
+	 		alert("Response: " + jqXHR.responseText + "\nStatus: " + textStatus);
+	    },
+	    error: function(jqXHR, textStatus, errorThrown) 
+	    {
+			alert("Error: " + jqXHR.responseText);
+	    }          
+    });
+   
+  });
+  
+
+});
+
+
+</script>
+</head>
+<body>
+<h1>Test screen for Create Event</h1>
+
+<p>Person ID : <input type="text" name="personUid" id="personUid"/></p>
+<p>End date : <input type="text" name="end" id="end"/></p>
+<p>Force Code : <input type="text" name="forceCode" id="forceCode"/></p>
+<p>Force reference : <input type="text" name="forceReference" id="forceReference"/></p>
+<p>Event Type : <input type="text" name="type" id="type"/></p>
+<p>Offence : <input type="text" name="offence" id="offence"/></p>
+<p>Power of arrest : <input type="text" name="powerOfArrest" id="powerOfArrest"/></p>
+<p>Report date : <input type="text" name="reportDate" id="reportDate"/></p>
+
+
+
+<button>Create Event</button>
+
+</body>
+</html>
