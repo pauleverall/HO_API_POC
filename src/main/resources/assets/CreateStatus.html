@@ -1,0 +1,49 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("button").click(function(){
+  var status = {};
+  status['type'] = $("#statusUid").val();
+  status['reason'] = $("#reason").val();
+  status['expiry_date'] = $("#expiryDate").val();
+  
+  var statusUrl = "/v2/people/"+$("#personUid").val()+"/status?access_token="+$("#accessToken").val();
+  
+  $.ajax({
+        url: statusUrl,
+    	type: 'POST',
+  		data: JSON.stringify(status),
+ 		contentType: "application/json",
+	    success: function(data, textStatus, jqXHR)
+	    {
+	 		alert("Response: " + jqXHR.responseText + "\nStatus: " + textStatus);
+	    },
+	    error: function(jqXHR, textStatus, errorThrown) 
+	    {
+			alert("Error: " + jqXHR.responseText);
+	    }          
+    });
+   
+  });
+  
+
+});
+
+
+</script>
+</head>
+<body>
+<h1>Test screen for Create Status</h1>
+
+<p>Person ID : <input type="text" name="personUid" id="personUid"/></p>
+<p>Status Type : <input type="text" name="statusUid" id="statusUid"/></p>
+<p>Reason : <input type="text" name="reason" id="reason"/></p>
+<p>Expiry date : <input type="text" name="expiryDate" id="expiryDate"/></p>
+<p>Access Token : <input type="text" name="accessToken" id="accessToken"/></p>
+
+<button>Create Status</button>
+
+</body>
+</html>
