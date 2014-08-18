@@ -18,6 +18,12 @@ import com.ipl.people.v1.core.Person;
 import com.ipl.people.v1.dao.PersonDAO;
 import com.sun.jersey.api.NotFoundException;
 
+/**
+ * Resource class exposing get person restful API's returning JSON response version1.
+ * 
+ * @author Asha
+ *
+ */
 @Path("/v1/people/{person_uid}")
 @Produces(MediaType.APPLICATION_JSON)
 public class PersonResource {	
@@ -31,6 +37,13 @@ public class PersonResource {
 	}
 
 	
+	/**
+	 * Restful get API to return a person with a person id.
+	 * 
+	 * @param personId
+	 * @param justification
+	 * @return
+	 */
 	@GET
 	@Timed
 	@UnitOfWork

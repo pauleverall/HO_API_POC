@@ -24,6 +24,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Data model mapping Person table with all the required fields for Get Person API.
+ * 
+ * @author Asha
+ *
+ */
 @Entity
 @Table(name = "homeofficev1.person")
 @JsonInclude(Include.NON_EMPTY)

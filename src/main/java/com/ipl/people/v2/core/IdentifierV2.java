@@ -10,6 +10,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+/**
+ * Data model mapping Identifier table.
+ * 
+ * @author Asha
+ *
+ */
 @Entity
 @Table(name = "homeofficev2.identifier")
 @JsonIgnoreProperties

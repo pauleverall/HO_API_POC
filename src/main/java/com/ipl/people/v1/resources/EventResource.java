@@ -20,6 +20,13 @@ import com.ipl.people.v1.core.Event;
 import com.ipl.people.v1.dao.EventDAO;
 import com.sun.jersey.api.NotFoundException;
 
+
+/**
+ * Resource class exposing event related restful API's version1.
+ * 
+ * @author Asha
+ *
+ */
 @Path("/v1/people/{person_uid}/events")
 @Produces(MediaType.APPLICATION_JSON)
 public class EventResource {
@@ -34,6 +41,16 @@ public class EventResource {
 		this.wantedOrMissingPersonDAO = wantedOrMissingPersonDAO;
 	}
 
+	/**
+	 * Restful get API to return all the events associated with a person and type.
+	 * 
+	 * @param personId
+	 * @param type
+	 * @param limit
+	 * @param offset
+	 * @param justification
+	 * @return List of events
+	 */
 	@GET
 	@Timed
 	@UnitOfWork
@@ -63,6 +80,14 @@ public class EventResource {
 		return events;
 	}
 
+	/**
+	 * Restful get API to return an event associated with a person.
+	 * 
+	 * @param personId
+	 * @param eventId
+	 * @param justification
+	 * @return Event
+	 */
 	@GET
 	@Timed
 	@UnitOfWork

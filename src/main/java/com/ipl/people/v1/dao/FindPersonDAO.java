@@ -18,6 +18,12 @@ import com.google.common.base.Optional;
 import com.ipl.people.v1.core.FindPerson;
 import com.sun.jersey.api.NotFoundException;
 
+/**
+ * DAO class providing find person functionality for version1.
+ *  
+ * @author Asha
+ *
+ */
 public class FindPersonDAO extends AbstractDAO<FindPerson> {
     public FindPersonDAO(SessionFactory factory) {
         super(factory);
@@ -26,6 +32,23 @@ public class FindPersonDAO extends AbstractDAO<FindPerson> {
     public static int recordsLimit = 20;    
     public static int recordsOffset = 0;
     
+    /**
+     * API to find persons with the possible matches of all the inputs provided by the user.
+     * 
+     * @param name
+     * @param surname
+     * @param ageStr
+     * @param dateOfBirth
+     * @param pncId
+     * @param niNumber
+     * @param driverNo
+     * @param croNo
+     * @param passportNo
+     * @param limit
+     * @param offset
+     * @return List of Persons
+     * @throws Exception
+     */
     public List<FindPerson> findPerson(Optional<String> name, Optional<String> surname, Optional<String> ageStr,  Optional<String> dateOfBirth, Optional<String> pncId, 
 			 Optional<String> niNumber, Optional<String> driverNo, Optional<String> croNo, Optional<String> passportNo, Optional<Integer> limit,Optional<Integer> offset) throws Exception{
     	
@@ -158,42 +181,7 @@ public class FindPersonDAO extends AbstractDAO<FindPerson> {
     		  
     	}
     	exactMatch = exactMatch.concat(" order by p.Person_UID ) "); ;  
-		partialMatch = partialMatch.concat(" ) order by p.Person_UID ) " ); 
-    	
-    	
-    	/*if(niNumber != null && niNumber.isPresent() && niNumber.get().length()>0){
-    		if(StringUtils.isNotBlank(exactMatch)) {
-        		exactMatch = exactMatch.concat(" and ");
-        		partialMatch = partialMatch.concat(" or ");
-        	}
-    		exactMatch = exactMatch.concat(" nin = '"+niNumber.get()+"' "); ;  
-    		partialMatch = partialMatch.concat(" nin = '"+niNumber.get()+"' " );  
-    	}
-    	
-    	if(driverNo != null && driverNo.isPresent() && driverNo.get().length()>0){
-    		if(StringUtils.isNotBlank(exactMatch)) {
-        		exactMatch = exactMatch.concat(" and ");
-        		partialMatch = partialMatch.concat(" or ");
-        	}
-    		exactMatch = exactMatch.concat(" dno = '"+driverNo.get()+"' "); ;  
-    		partialMatch = partialMatch.concat(" dno = '"+driverNo.get()+"' ") ;  
-    	}
-    	if(croNo != null && croNo.isPresent() && croNo.get().length()>0){
-    		if(StringUtils.isNotBlank(exactMatch)) {
-        		exactMatch = exactMatch.concat(" and ");
-        		partialMatch = partialMatch.concat(" or ");
-        	}
-    		exactMatch = exactMatch.concat(" cro = '"+croNo.get()+"' "); ;  
-    		partialMatch = partialMatch.concat(" cro = '"+croNo.get()+"' ") ;  
-    	}
-    	if(passportNo != null && passportNo.isPresent() && passportNo.get().length()>0){
-    		if(StringUtils.isNotBlank(exactMatch)) {
-        		exactMatch = exactMatch.concat(" and ");
-        		partialMatch = partialMatch.concat(" or ");
-        	}
-    		exactMatch = exactMatch.concat(" pap = '"+passportNo.get()+"' "); ;  
-    		partialMatch = partialMatch.concat(" pap = '"+passportNo.get()+"' " );  
-    	}*/
+		partialMatch = partialMatch.concat(" ) order by p.Person_UID ) " );     	
     	
     	
     	Query findPersons = currentSession().createSQLQuery(sql1 + exactMatch + sql2 + partialMatch).addEntity(FindPerson.class);

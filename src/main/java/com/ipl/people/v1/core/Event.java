@@ -14,6 +14,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+/**
+ * Data model mapping Event table.
+ * 
+ * @author Asha
+ *
+ */
 @Entity
 @Table(name = "homeofficev1.event")
 @JsonInclude(Include.NON_EMPTY)

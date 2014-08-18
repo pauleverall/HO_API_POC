@@ -12,6 +12,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+
+/**
+ * Data model mapping Alias date of birth table.
+ * 
+ * @author Asha
+ *
+ */
 @Entity
 @Table(name = "homeofficev1.alias_dob")
 @JsonIgnoreProperties

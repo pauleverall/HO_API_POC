@@ -5,8 +5,11 @@ import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -15,16 +18,24 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Data model mapping Person status table.
+ * 
+ * @author Asha
+ *
+ */
 @Entity
 @Table(name = "homeofficev2.person_status")
 @JsonInclude(Include.NON_EMPTY)
+@NamedQueries({
+	@NamedQuery(name = "com.ipl.people.person.status.findByPersonIdAndStatusIdV2", query = "SELECT s FROM PersonStatusV2 s WHERE s.personUID = :personId and s.statusUID = :statusId") })
 public class PersonStatusV2 {
 
 	private final static String eventUrl1 = "/v2/people/";
 	private final static String eventUrl2 = "/events/";;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private int id;
 
@@ -43,14 +54,19 @@ public class PersonStatusV2 {
 
 	@Column(name = "Related_Event_UID", nullable = true)
 	@JsonIgnore
-	private String relatedEventUID;
+	private int relatedEventUID;
 
 	@Column(name = "Status_Record_Date", nullable = true)
-	@JsonProperty("timestamp")
+	@JsonProperty("start_date")
 	private Date statusRecordDate;
 
 	@Column(name = "Status_Expiry_Date", nullable = true)
+	@JsonIgnore
 	private Date statusExpiryDate;
+	
+	@Column(name = "Status_UID", nullable = true)
+	@JsonIgnore
+	private String statusUID;
 
 	public int getId() {
 		return id;
@@ -84,11 +100,11 @@ public class PersonStatusV2 {
 		this.reason = reason;
 	}
 
-	public String getRelatedEventUID() {
+	public int getRelatedEventUID() {
 		return relatedEventUID;
 	}
 
-	public void setRelatedEventUID(String relatedEventUID) {
+	public void setRelatedEventUID(int relatedEventUID) {
 		this.relatedEventUID = relatedEventUID;
 	}
 
@@ -108,14 +124,24 @@ public class PersonStatusV2 {
 		this.statusExpiryDate = statusExpiryDate;
 	}
 
-	@JsonProperty("name")
+	@JsonProperty("type")
 	public String getName() {
 		return this.status.getDescription();
 	}
 
 	@JsonProperty("associated_event")
 	public String getAssociatedEvent() {
-		return eventUrl1 + this.personUID + eventUrl2 + this.relatedEventUID;
+		if(this.relatedEventUID>0){
+			return eventUrl1 + this.personUID + eventUrl2 + this.relatedEventUID;
+		}
+		return null;
 	}
 
+	public String getStatusUID() {
+		return statusUID;
+	}
+
+	public void setStatusUID(String statusUID) {
+		this.statusUID = statusUID;
+	}
 }

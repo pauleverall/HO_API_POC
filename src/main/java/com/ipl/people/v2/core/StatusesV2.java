@@ -6,6 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Data model mapping Status table, which are the allowed status for a person.
+ * 
+ * @author Asha
+ *
+ */
 @Entity
 @Table(name = "homeofficev2.statuses")
 public class StatusesV2 {

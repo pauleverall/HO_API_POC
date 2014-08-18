@@ -19,15 +19,22 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Data model mapping Person table with all the required fields for Get Person API.
+ * 
+ * @author Asha
+ *
+ */
 @Entity
 @Table(name = "homeofficev2.person")
 @JsonInclude(Include.NON_EMPTY)
-//@JsonFilter("myFilter")
+@JsonFilter("fieldsFilter")
 public class PersonV2 {
 
 	@Id
@@ -51,10 +58,6 @@ public class PersonV2 {
 	@Column(name = "Marital_Status", nullable = false)
 	@JsonProperty("marital_status")
 	private String maritalStatus;
-
-	@Column(name = "Information_Marker", nullable = true)
-	@JsonProperty("info_markers")
-	private String formationMarker;
 
 	@Column(name = "Photograph_URL", nullable = true)
 	@JsonProperty("photograph_url")
@@ -377,14 +380,6 @@ public class PersonV2 {
 
 	public void setAddress(LocationV2 address) {
 		this.address = address;
-	}
-
-	public String getFormationMarker() {
-		return formationMarker;
-	}
-
-	public void setFormationMarker(String formationMarker) {
-		this.formationMarker = formationMarker;
 	}
 
 	public Set<PersonStatusV2> getPersonStatuses() {

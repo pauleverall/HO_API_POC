@@ -19,9 +19,16 @@ import com.ipl.people.authentication.Authentication;
 import com.ipl.people.authentication.AuthenticationDAO;
 import com.ipl.people.authentication.AuthenticationFilter;
 import com.ipl.people.v2.core.PersonStatusV2;
+import com.ipl.people.v2.core.StatusV2;
 import com.ipl.people.v2.core.StatusesV2;
 import com.ipl.people.xmltransformer.XmlJsonRouteBuilder;
 
+/**
+ * Main class drop wizard runs to configure all the required classes and initiate all API's
+ * 
+ * @author Asha
+ *
+ */
 public class PersonApplication extends Application<PersonConfiguration> {
 	public static void main(String[] args) throws Exception {
 		new PersonApplication().run(args);
@@ -46,7 +53,7 @@ public class PersonApplication extends Application<PersonConfiguration> {
 			com.ipl.people.v2.core.DuplicatePersonV2.class,
 			com.ipl.people.v2.core.EventV2.class,
 			com.ipl.people.v2.core.FindPersonV2.class, PersonStatusV2.class,
-			StatusesV2.class, Authentication.class) {
+			StatusesV2.class, Authentication.class, StatusV2.class) {
 
 		public DataSourceFactory getDataSourceFactory(
 				PersonConfiguration configuration) {
@@ -55,17 +62,26 @@ public class PersonApplication extends Application<PersonConfiguration> {
 
 	};
 
+	/* (non-Javadoc)
+	 * @see io.dropwizard.Application#getName()
+	 */
 	@Override
 	public String getName() {
 		return "People API";
 	}
 
+	/* (non-Javadoc)
+	 * @see io.dropwizard.Application#initialize(io.dropwizard.setup.Bootstrap)
+	 */
 	@Override
 	public void initialize(Bootstrap<PersonConfiguration> bootstrap) {
 		bootstrap.addBundle(hibernateBundle);
-		bootstrap.addBundle(new ConfiguredAssetsBundle("/assets/", "/image/"));
+		bootstrap.addBundle(new ConfiguredAssetsBundle("/assets/", "/resources/"));
 	}
 
+	/* (non-Javadoc)
+	 * @see io.dropwizard.Application#run(io.dropwizard.Configuration, io.dropwizard.setup.Environment)
+	 */
 	@Override
 	public void run(PersonConfiguration configuration, Environment environment)
 			throws Exception {
@@ -122,13 +138,29 @@ public class PersonApplication extends Application<PersonConfiguration> {
 		final com.ipl.people.v2.dao.EventDAO eventDAOV2 = new com.ipl.people.v2.dao.EventDAO(
 				hibernateBundle.getSessionFactory());
 
+		final com.ipl.people.v2.dao.PersonStatusDAO personStatusDAOV2 = new com.ipl.people.v2.dao.PersonStatusDAO(
+				hibernateBundle.getSessionFactory());
+		
 		final com.ipl.people.v2.resources.EventResource eventResourceV2 = new com.ipl.people.v2.resources.EventResource(
-				eventDAOV2);
+				eventDAOV2,personStatusDAOV2);
 		environment.jersey().register(eventResourceV2);
 
+		final com.ipl.people.v2.resources.EventsXMLResource eventsXMLResourceV2 = new com.ipl.people.v2.resources.EventsXMLResource(
+				eventDAOV2, camelContext, template);
+		environment.jersey().register(eventsXMLResourceV2);
+		
 		final com.ipl.people.v2.resources.EventXMLResource eventXMLResourceV2 = new com.ipl.people.v2.resources.EventXMLResource(
 				eventDAOV2, camelContext, template);
 		environment.jersey().register(eventXMLResourceV2);
+		
+		
+		
+		final com.ipl.people.v2.dao.StatusesDAO statusDAOV2 = new com.ipl.people.v2.dao.StatusesDAO(
+				hibernateBundle.getSessionFactory());
+
+		final com.ipl.people.v2.resources.PersonStatusResource statusResourceV2 = new com.ipl.people.v2.resources.PersonStatusResource(
+				personStatusDAOV2, statusDAOV2);
+		environment.jersey().register(statusResourceV2);
 
 		final AuthenticationDAO guidDao = new AuthenticationDAO(
 				hibernateBundle.getSessionFactory());
@@ -139,7 +171,6 @@ public class PersonApplication extends Application<PersonConfiguration> {
 						new AuthenticationFilter(guidDao))
 				.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class),
 						true, "/v2/*");
-		;
 
 	}
 

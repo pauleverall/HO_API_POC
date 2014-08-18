@@ -10,6 +10,12 @@ import com.bazaarvoice.dropwizard.assets.AssetsBundleConfiguration;
 import com.bazaarvoice.dropwizard.assets.AssetsConfiguration;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Drop wizard configuration class, which loads all the configurations provided in yml file.
+ * 
+ * @author Asha
+ *
+ */
 public class PersonConfiguration extends Configuration implements
 		AssetsBundleConfiguration {
 

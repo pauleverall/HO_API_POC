@@ -15,6 +15,13 @@ import javax.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Filter class intercept the request to check user is requesting api's with a correct access token.
+ *  
+ * @author Asha
+ *
+ */
+
 public class AuthenticationFilter implements Filter {
 	private final AuthenticationDAO guidDAO;
 	
@@ -25,13 +32,16 @@ public class AuthenticationFilter implements Filter {
 	
 	 private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationFilter.class);
 
+	/* (non-Javadoc)
+	 * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)
+	 */
 	public void doFilter(ServletRequest req, ServletResponse res,
 			FilterChain chain) throws IOException, ServletException {
 
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
 		
-		
+		//get the access token from request and check if it is provided and valid
 		String accessToken = request.getHeader("access_token");
 		try {
 			if (accessToken == null || accessToken.isEmpty()) {

@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * GUID generator used to generate access tokens.
+ * 
+ * @author Asha
+ *
+ */
 public class GUIDGenerator {
 	
 	public static int numberOfUUIDs = 10;

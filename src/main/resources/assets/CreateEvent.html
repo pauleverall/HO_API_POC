@@ -13,7 +13,7 @@ $(document).ready(function(){
   event['power_of_arrest'] = $("#powerOfArrest").val();
   event['report_date'] = $("#reportDate").val();
   
-  var eventUrl = "/v2/people/"+$("#personUid").val()+"/events?access_token=293da4c2-18f9-4deb-a959-77c787e9f20a";
+  var eventUrl = "/v2/people/"+$("#personUid").val()+"/events?access_token="+$("#accessToken").val();
   
   $.ajax({
         url: eventUrl,
@@ -49,7 +49,7 @@ $(document).ready(function(){
 <p>Offence : <input type="text" name="offence" id="offence"/></p>
 <p>Power of arrest : <input type="text" name="powerOfArrest" id="powerOfArrest"/></p>
 <p>Report date : <input type="text" name="reportDate" id="reportDate"/></p>
-
+<p>Access Token : <input type="text" name="accessToken" id="accessToken"/></p>
 
 
 <button>Create Event</button>

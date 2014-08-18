@@ -13,6 +13,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Data model mapping Address table.
+ * 
+ * @author Asha
+ *
+ */
 @Entity
 @Table(name = "homeofficev1.location")
 @JsonInclude(Include.NON_EMPTY) 
@@ -27,9 +33,6 @@ public class Location {
     @Column(name = "Person_UID" , nullable = false)
     @JsonIgnore
     private String personUID;
-    
-   /* @OneToOne(mappedBy="address")
-    private Person person;*/
     
     @Column(name = "PO_Box" , nullable = true)
    	@JsonProperty("po_box") 
@@ -190,16 +193,5 @@ public class Location {
 	public void setAddressForceCode(String addressForceCode) {
 		this.addressForceCode = addressForceCode;
 	}
-/*
-	public Person getPerson() {
-		return person;
-	}
-
-	public void setPerson(Person person) {
-		this.person = person;
-	}
-    
-	
-    */
 
 }

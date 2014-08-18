@@ -24,6 +24,12 @@ import com.ipl.people.v2.core.FindPersonV2;
 import com.ipl.people.v2.dao.FindPersonDAO;
 import com.sun.jersey.api.NotFoundException;
 
+/**
+ * Resource class exposing Find Person restful API's returning XML response.
+ * 
+ * @author Asha
+ *
+ */
 @Path("/v2/people.xml")
 @Produces(MediaType.APPLICATION_XML)
 public class FindPersonXMLResource {	
@@ -42,6 +48,24 @@ public class FindPersonXMLResource {
 		this.template = template;
 	}
 	
+	/**
+	 * Restful get API to find persons with the possible matches of all the inputs provided by the user in XML format.
+	 * 
+	 * @param name
+	 * @param surname
+	 * @param age
+	 * @param dateOfBirth
+	 * @param pncId
+	 * @param niNumber
+	 * @param driverNo
+	 * @param croNo
+	 * @param passportNo
+	 * @param justification
+	 * @param limit
+	 * @param offset
+	 * @return List of matched persons in XML format
+	 * @throws Exception
+	 */
 	@GET
 	@Timed
 	@UnitOfWork

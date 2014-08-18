@@ -23,6 +23,12 @@ import org.junit.Test;
 
 import com.ipl.people.xmltransformer.XmlJsonRouteBuilder;
 
+/**
+ * Test class for XmlJsonRouteBuilder.
+ * 
+ * @author Asha 
+ *
+ */
 public class XmlJsonTest extends CamelTestSupport {
 
     @Override

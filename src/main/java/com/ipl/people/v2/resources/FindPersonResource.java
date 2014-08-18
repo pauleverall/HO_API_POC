@@ -19,6 +19,12 @@ import com.ipl.people.v2.core.FindPersonV2;
 import com.ipl.people.v2.dao.FindPersonDAO;
 import com.sun.jersey.api.NotFoundException;
 
+/**
+ * Resource class exposing Find Person restful API's returning JSON response version2(latest).
+ * 
+ * @author Asha
+ *
+ */
 @Path("/v2/people")
 @Produces(MediaType.APPLICATION_JSON)
 public class FindPersonResource {	
@@ -31,6 +37,24 @@ public class FindPersonResource {
 		this.findPersonDAO = findPersonDAO;
 	}
 	
+	/**
+	 * Restful get API to find persons with the possible matches of all the inputs provided by the user.
+	 * 
+	 * @param name
+	 * @param surname
+	 * @param age
+	 * @param dateOfBirth
+	 * @param pncId
+	 * @param niNumber
+	 * @param driverNo
+	 * @param croNo
+	 * @param passportNo
+	 * @param justification
+	 * @param limit
+	 * @param offset
+	 * @return List of matched persons
+	 * @throws Exception
+	 */
 	@GET
 	@Timed
 	@UnitOfWork
